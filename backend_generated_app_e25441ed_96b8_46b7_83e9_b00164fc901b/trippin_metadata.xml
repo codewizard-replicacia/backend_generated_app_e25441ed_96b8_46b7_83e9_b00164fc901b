@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Model">
+            <EntityType HasStream="false" Name="ProductionActualFilming">
+                <Key>
+                    <PropertyRef Name="FilmID"/>
+                </Key>
+                <Property Name="FilmID" Type="Edm.Int32" isUnique="false"/>
+                <Property Name="SceneID" Type="Edm.String" isUnique="false"/>
+                <Property Name="SceneSet" Type="Edm.String" isUnique="false"/>
+                <Property Name="HairstylistForActors" Type="Edm.String" isUnique="false"/>
+            </EntityType>
+            <EntityType HasStream="false" Name="ScoutingLocations">
+                <Key>
+                    <PropertyRef Name="ScoutLocID"/>
+                </Key>
+                <Property Name="ScoutLocID" Type="Edm.Int32" isUnique="false"/>
+                <Property Name="ScriptAnalysisLocNotes" Type="Edm.String" isUnique="false"/>
+                <Property Name="BrowseLocationDBslist" Type="Edm.String" isUnique="false"/>
+                <Property Name="LocalAreaslist" Type="Edm.String" isUnique="false"/>
+                <Property Name="FilmShootCompatablePermission" Type="Edm.String" isUnique="false"/>
+            </EntityType>
+            <EntityType HasStream="false" Name="PreProduction">
+                <Key>
+                    <PropertyRef Name="PreProductionID"/>
+                </Key>
+                <Property Name="FilmTitle" Type="Edm.String" isUnique="false"/>
+                <Property Name="ProducerName" Type="Edm.String" isUnique="false"/>
+                <Property Name="ProductionManager" Type="Edm.String" isUnique="false"/>
+                <Property Name="AsstDirector" Type="Edm.String" isUnique="false"/>
+                <Property Name="PreProductionID" Type="Edm.Int32" isUnique="false"/>
+                <NavigationProperty Name="Locations" Type="Collection(Model.ScoutingLocations)"/>
+                <NavigationProperty Name="RaiseFunds" Type="Model.ProducerRaiseFunds"/>
+                <NavigationProperty Name="Filming" Type="Collection(Model.ProductionActualFilming)"/>
+            </EntityType>
+            <EntityType HasStream="false" Name="ProducerRaiseFunds">
+                <Key>
+                    <PropertyRef Name="FundsID"/>
+                </Key>
+                <Property Name="FundsID" Type="Edm.Int32" isUnique="false"/>
+                <Property Name="Investors" Type="Edm.String" isUnique="false"/>
+                <Property Name="ProductionCompanies" Type="Edm.String" isUnique="false"/>
+                <Property Name="ProducerNames" Type="Edm.String" isUnique="false"/>
+                <Property Name="GiftGrants" Type="Edm.String" isUnique="false"/>
+                <Property Name="Crowdfunding" Type="Edm.String" isUnique="false"/>
+            </EntityType>
+            <EntityContainer Name="Container">
+                <EntitySet Name="ProductionActualFilmings" EntityType="Model.ProductionActualFilming"/>
+                <EntitySet Name="ScoutingLocations" EntityType="Model.ScoutingLocations"/>
+                <EntitySet Name="PreProductions" EntityType="Model.PreProduction">
+                    <NavigationPropertyBinding Path="Locations" Target="ScoutingLocations"/>
+                    <NavigationPropertyBinding Path="RaiseFunds" Target="ProducerRaiseFunds"/>
+                    <NavigationPropertyBinding Path="Filming" Target="ProductionActualFilmings"/>
+                </EntitySet>
+                <EntitySet Name="ProducerRaiseFunds" EntityType="Model.ProducerRaiseFunds"/>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

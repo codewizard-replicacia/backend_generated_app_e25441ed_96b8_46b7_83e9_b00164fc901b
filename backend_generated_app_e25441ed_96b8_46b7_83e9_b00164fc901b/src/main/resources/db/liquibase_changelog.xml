@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+		http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <property name="schemaName" value="generated_app"></property>
+    <property name="author=" value="db-designer"></property>
+    <changeSet id="v1-01-01" author="${author}">
+    
+ <createTable schemaName="${schemaName}" tableName="ScoutingLocations">
+	<column name="ScoutLocID" type="SERIAL" autoIncrement="true" >
+        <constraints nullable="false" primaryKey="true"/>
+    </column>
+     <column name="ScriptAnalysisLocNotes" type="VARCHAR(250)" />
+    
+     <column name="BrowseLocationDBslist" type="VARCHAR(250)" />
+    
+     <column name="LocalAreaslist" type="VARCHAR(250)" />
+    
+     <column name="FilmShootCompatablePermission" type="VARCHAR(250)" />
+    
+ 	
+</createTable>
+ <createTable schemaName="${schemaName}" tableName="ProducerRaiseFunds">
+	<column name="FundsID" type="SERIAL" autoIncrement="true" >
+        <constraints nullable="false" primaryKey="true"/>
+    </column>
+     <column name="Investors" type="VARCHAR(250)" />
+    
+     <column name="ProductionCompanies" type="VARCHAR(250)" />
+    
+     <column name="ProducerNames" type="VARCHAR(250)" />
+    
+     <column name="GiftGrants" type="VARCHAR(250)" />
+    
+     <column name="Crowdfunding" type="VARCHAR(250)" />
+    
+ 	
+</createTable>
+ <createTable schemaName="${schemaName}" tableName="PreProduction">
+    <column name="FilmTitle" type="VARCHAR(250)" />
+    
+     <column name="ProducerName" type="VARCHAR(250)" />
+    
+     <column name="ProductionManager" type="VARCHAR(250)" />
+    
+     <column name="AsstDirector" type="VARCHAR(250)" />
+    
+ 	<column name="PreProductionID" type="SERIAL" autoIncrement="true" >
+        <constraints nullable="false" primaryKey="true"/>
+    </column>
+ 	
+</createTable>
+ <createTable schemaName="${schemaName}" tableName="ProductionActualFilming">
+	<column name="FilmID" type="SERIAL" autoIncrement="true" >
+        <constraints nullable="false" primaryKey="true"/>
+    </column>
+     <column name="SceneID" type="VARCHAR(250)" />
+    
+     <column name="SceneSet" type="VARCHAR(250)" />
+    
+     <column name="HairstylistForActors" type="VARCHAR(250)" />
+    
+ 	
+</createTable>
+	
+  <createTable schemaName="${schemaName}" tableName="PreProductionFilming">
+	<column name="Id" type="SERIAL" autoIncrement="true">
+		<constraints primaryKey="true" nullable="false"/>
+	</column>
+	<column name="PreProductionID" type="INTEGER" />
+	<column name="FilmID" type="INTEGER" />
+</createTable>
+  <createTable schemaName="${schemaName}" tableName="PreProductionLocations">
+	<column name="Id" type="SERIAL" autoIncrement="true">
+		<constraints primaryKey="true" nullable="false"/>
+	</column>
+	<column name="PreProductionID" type="INTEGER" />
+	<column name="ScoutLocID" type="INTEGER" />
+</createTable>
+
+ 
+	<addForeignKeyConstraint baseTableName="PreProductionFilming" baseTableSchemaName="${schemaName}"  baseColumnNames="PreProductionID" constraintName="ProductionActualFilming_PreProductionID_fk"
+	                                  referencedTableName="PreProduction" referencedTableSchemaName="${schemaName}" referencedColumnNames="PreProductionID"/>
+	                                  
+	<addForeignKeyConstraint baseTableName="PreProductionFilming" baseTableSchemaName="${schemaName}"  baseColumnNames="FilmID" constraintName="ProductionActualFilming_FilmID_fk"
+	                                  referencedTableName="ProductionActualFilming" referencedTableSchemaName="${schemaName}" referencedColumnNames="FilmID"/>
+ 
+ 
+	<addForeignKeyConstraint baseTableName="PreProductionLocations" baseTableSchemaName="${schemaName}"  baseColumnNames="PreProductionID" constraintName="ScoutingLocations_PreProductionID_fk"
+	                                  referencedTableName="PreProduction" referencedTableSchemaName="${schemaName}" referencedColumnNames="PreProductionID"/>
+	                                  
+	<addForeignKeyConstraint baseTableName="PreProductionLocations" baseTableSchemaName="${schemaName}"  baseColumnNames="ScoutLocID" constraintName="ScoutingLocations_ScoutLocID_fk"
+	                                  referencedTableName="ScoutingLocations" referencedTableSchemaName="${schemaName}" referencedColumnNames="ScoutLocID"/>
+ 
+	
+ 
+ 
+ 
+	<addColumn tableName="PreProduction" schemaName="${schemaName}">
+	    <column name="PreProductionRaiseFunds" type="INTEGER"/>
+	</addColumn>
+	<addForeignKeyConstraint baseTableName="PreProduction" baseColumnNames="PreProductionRaiseFunds" baseTableSchemaName="${schemaName}" constraintName="PreProduction_RaiseFunds_fk" referencedTableName="ProducerRaiseFunds"
+	                                 referencedColumnNames="FundsID" referencedTableSchemaName="${schemaName}"/>
+ 
+
+ 
+	    </changeSet>
+</databaseChangeLog>
